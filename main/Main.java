@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -31,16 +32,27 @@ public class Main {
     }
 
     public static void testarConexao() {
-        try {
-            Connection conn = ConnectionFactory.getConnection();
+        Connection conn = null;
 
-            if (conn != null) {
-                System.out.println("✅ Conectado com sucesso ao Supabase!");
-                conn.close();
+        try {
+            conn = ConnectionFactory.getConnection();
+
+            if (conn != null && !conn.isClosed()) {
+                System.out.println(" Conectado com sucesso ao Supabase!");
+            } else {
+                System.out.println(" Falha ao conectar.");
             }
 
         } catch (Exception e) {
-            System.out.println("❌ Erro: " + e.getMessage());
+            System.out.println(" Erro:");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
