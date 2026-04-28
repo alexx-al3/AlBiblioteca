@@ -1,38 +1,34 @@
 package classe;
 
+import java.util.UUID;
+
 public class Livro {
 
+    private String id;
     private String titulo;
     private String autor;
-    private boolean disponivel;
+    private int ano;
 
-    public Livro(String titulo, String autor) {
+    public Livro(String titulo, String autor, int ano) {
+        this.id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.autor = autor;
-        this.disponivel = true;
+        this.ano = ano;
     }
 
-    // Encapsulamento
+    public String getId() {
+        return id;
+    }
+
     public String getTitulo() {
         return titulo;
     }
 
-    public boolean isDisponivel() {
-        return disponivel;
+    public String getAutor() {
+        return autor;
     }
 
-    // Método de negócio
-    public void emprestar() {
-        if (disponivel) {
-            disponivel = false;
-            System.out.println("Livro emprestado!");
-        } else {
-            System.out.println("Livro já está emprestado.");
-        }
-    }
-
-    public void devolver() {
-        disponivel = true;
-        System.out.println("Livro devolvido!");
+    public int getAno() {
+        return ano;
     }
 }

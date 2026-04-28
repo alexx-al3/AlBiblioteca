@@ -1,12 +1,26 @@
 package classe;
 
-public class Usuario extends Pessoa {
+public class Usuario {
 
-    public Usuario(String nome, String cpf) {
-        super(nome, cpf);
+    private String id;
+    private String nome;
+    private String tipo;
+
+    public Usuario(String id, String nome, String tipo) {
+        this.id = id;
+        this.nome = nome;
+        this.tipo = tipo;
     }
 
-    public void exibirUsuario() {
-        System.out.println("Usuário: " + getNome() + " - CPF: " + getCpf());
+    public String getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 }

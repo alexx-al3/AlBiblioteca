@@ -1,6 +1,5 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class ConnectionFactory {
 
@@ -12,8 +11,7 @@ public class ConnectionFactory {
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Erro ao conectar:");
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

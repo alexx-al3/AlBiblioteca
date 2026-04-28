@@ -1,25 +1,20 @@
 package classe;
 
-import java.time.LocalDate;
-
 public class Emprestimo {
 
-    private Usuario usuario;
     private Livro livro;
-    private LocalDate dataEmprestimo;
+    private Usuario usuario;
 
-    public Emprestimo(Usuario usuario, Livro livro) {
-        this.usuario = usuario;
+    public Emprestimo(Livro livro, Usuario usuario) {
         this.livro = livro;
-        this.dataEmprestimo = LocalDate.now();
+        this.usuario = usuario;
     }
 
-    public void realizarEmprestimo() {
-        if (livro.isDisponivel()) {
-            livro.emprestar();
-            System.out.println("Empréstimo realizado para " + usuario.getNome());
-        } else {
-            System.out.println("Não foi possível emprestar.");
-        }
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 }

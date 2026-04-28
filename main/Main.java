@@ -1,4 +1,6 @@
-import java.sql.Connection;
+import classe.Livro;
+import classe.Usuario;
+
 import java.util.Scanner;
 
 public class Main {
@@ -6,53 +8,66 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        int opcao = -1;
+        int op;
 
-        while (opcao != 0) {
-            System.out.println("\n=== ALLibrary ===");
-            System.out.println("1 - Testar conexão");
-            System.out.println("0 - Sair");
-            System.out.print("Escolha: ");
+        do {
+            System.out.println("\n=== BIBLIOTECA ===");
+            System.out.println("1 - Cadastrar Livro");
+            System.out.println("2 - Cadastrar Usuário");
+            System.out.println("3 - Emprestar Livro");
+            System.out.println("4 - Devolver Livro");
+            System.out.println("5 - Listar Livros");
+            System.out.println("6 - Sair");
 
-            opcao = sc.nextInt();
+            op = sc.nextInt();
+            sc.nextLine();
 
-            switch (opcao) {
+            switch (op) {
+
                 case 1:
-                    testarConexao();
+                    System.out.print("Título: ");
+                    String t = sc.nextLine();
+
+                    System.out.print("Autor: ");
+                    String a = sc.nextLine();
+
+                    System.out.print("Ano: ");
+                    int ano = sc.nextInt();
+
+                    LivroDAO.inserir(new Livro(t, a, ano));
                     break;
-                case 0:
-                    System.out.println("Saindo...");
+
+                case 2:
+                    System.out.print("ID: ");
+                    String id = sc.nextLine();
+
+                    UsuarioDAO.inserir(new Usuario(id, "Nome", "aluno"));
                     break;
-                default:
-                    System.out.println("Opção inválida!");
+
+                case 3:
+                    System.out.print("Livro ID: ");
+                    String l = sc.nextLine();
+
+                    System.out.print("Usuário ID: ");
+                    String u = sc.nextLine();
+
+                    EmprestimoDAO.emprestar(l, u);
+                    break;
+
+                case 4:
+                    System.out.print("Livro ID: ");
+                    String d = sc.nextLine();
+
+                    EmprestimoDAO.devolver(d);
+                    break;
+
+                case 5:
+                    LivroDAO.listar();
+                    break;
             }
-        }
+
+        } while (op != 6);
 
         sc.close();
-    }
-
-    public static void testarConexao() {
-        Connection conn = null;
-
-        try {
-            conn = ConnectionFactory.getConnection();
-
-            if (conn != null && !conn.isClosed()) {
-                System.out.println(" Conectado com sucesso ao Supabase!");
-            } else {
-                System.out.println(" Falha ao conectar.");
-            }
-
-        } catch (Exception e) {
-            System.out.println(" Erro:");
-            e.printStackTrace();
-        } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
