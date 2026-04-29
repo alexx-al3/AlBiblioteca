@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import classe.Livro;
 
 public class BibliotecaUI extends JFrame {
 
@@ -35,7 +37,7 @@ public class BibliotecaUI extends JFrame {
         setVisible(true);
     }
 
-    // ===== TELAS =====
+    // ===== CADASTRAR LIVRO =====
 
     private void abrirCadastroLivro() {
 
@@ -49,7 +51,12 @@ public class BibliotecaUI extends JFrame {
                 "Ano:", ano
         };
 
-        int opcao = JOptionPane.showConfirmDialog(null, campos, "Cadastrar Livro", JOptionPane.OK_CANCEL_OPTION);
+        int opcao = JOptionPane.showConfirmDialog(
+                null,
+                campos,
+                "Cadastrar Livro",
+                JOptionPane.OK_CANCEL_OPTION
+        );
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
@@ -69,6 +76,8 @@ public class BibliotecaUI extends JFrame {
         }
     }
 
+    // ===== CADASTRAR USUÁRIO =====
+
     private void abrirCadastroUsuario() {
 
         JTextField nome = new JTextField();
@@ -83,7 +92,12 @@ public class BibliotecaUI extends JFrame {
                 "Tipo:", tipo
         };
 
-        int opcao = JOptionPane.showConfirmDialog(null, campos, "Cadastrar Usuário", JOptionPane.OK_CANCEL_OPTION);
+        int opcao = JOptionPane.showConfirmDialog(
+                null,
+                campos,
+                "Cadastrar Usuário",
+                JOptionPane.OK_CANCEL_OPTION
+        );
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
@@ -102,6 +116,8 @@ public class BibliotecaUI extends JFrame {
         }
     }
 
+    // ===== EMPRESTAR LIVRO =====
+
     private void emprestarLivro() {
 
         JTextField livroId = new JTextField();
@@ -112,7 +128,12 @@ public class BibliotecaUI extends JFrame {
                 "ID do Usuário:", usuarioId
         };
 
-        int opcao = JOptionPane.showConfirmDialog(null, campos, "Emprestar Livro", JOptionPane.OK_CANCEL_OPTION);
+        int opcao = JOptionPane.showConfirmDialog(
+                null,
+                campos,
+                "Emprestar Livro",
+                JOptionPane.OK_CANCEL_OPTION
+        );
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
@@ -130,6 +151,8 @@ public class BibliotecaUI extends JFrame {
         }
     }
 
+    // ===== DEVOLVER LIVRO =====
+
     private void devolverLivro() {
 
         String livroId = JOptionPane.showInputDialog("ID do Livro:");
@@ -143,28 +166,37 @@ public class BibliotecaUI extends JFrame {
         }
     }
 
+    // ===== LISTAR LIVROS (CORRIGIDO DE VERDADE) =====
+
     private void listarLivros() {
 
         try {
-            java.sql.Connection conn = ConnectionFactory.getConnection();
-            java.sql.ResultSet rs = LivroDAO.buscarTodos(conn);
+            List<Livro> livros = LivroDAO.buscarTodos();
 
             StringBuilder lista = new StringBuilder();
 
-            while (rs.next()) {
-                lista.append(
-                        rs.getString("id") + " | " +
-                        rs.getString("titulo") + " | " +
-                        rs.getString("autor") + " | " +
-                        rs.getInt("ano") + " | " +
-                        (rs.getBoolean("disponivel") ? "Disponível" : "Emprestado")
-                ).append("\n");
+            for (Livro l : livros) {
+                lista.append(l.getId())
+                     .append(" | ")
+                     .append(l.getTitulo())
+                     .append(" | ")
+                     .append(l.getAutor())
+                     .append(" | ")
+                     .append(l.getAno())
+                     .append(" | ")
+                     .append(l.isDisponivel() ? "Disponível" : "Emprestado")
+                     .append("\n");
             }
 
             JTextArea area = new JTextArea(lista.toString());
             area.setEditable(false);
 
-            JOptionPane.showMessageDialog(null, new JScrollPane(area), "Livros", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    null,
+                    new JScrollPane(area),
+                    "Livros",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());

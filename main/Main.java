@@ -18,7 +18,7 @@ public class Main {
                 case 2 -> cadastrarUsuario();
                 case 3 -> emprestarLivro();
                 case 4 -> devolverLivro();
-                case 5 -> LivroDAO.listar();
+                case 5 -> LivroService.listarLivros();
                 case 6 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -40,7 +40,7 @@ public class Main {
 
     private static int lerInt() {
         int valor = sc.nextInt();
-        sc.nextLine(); // limpar buffer
+        sc.nextLine();
         return valor;
     }
 
