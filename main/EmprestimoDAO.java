@@ -1,56 +1,37 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class EmprestimoDAO {
 
-    public static void emprestar(String livroId, String usuarioId) {
+    public static void registrarEmprestimo(int livroId, String usuarioId) {
 
-        String check = "SELECT disponivel FROM livro WHERE id = ?";
-        String insert = "INSERT INTO emprestimo (livro_id, usuario_id) VALUES (?, ?)";
-        String update = "UPDATE livro SET disponivel = false WHERE id = ?";
+        String sql = "INSERT INTO emprestimo (livro_id, usuario_id, data_emprestimo) VALUES (?, ?, NOW())";
 
-        try (Connection conn = ConnectionFactory.getConnection()) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            PreparedStatement stmtCheck = conn.prepareStatement(check);
-            stmtCheck.setString(1, livroId);
-            ResultSet rs = stmtCheck.executeQuery();
+            stmt.setInt(1, livroId);
+            stmt.setString(2, usuarioId);
 
-            if (rs.next() && rs.getBoolean("disponivel")) {
-
-                PreparedStatement stmt1 = conn.prepareStatement(insert);
-                stmt1.setString(1, livroId);
-                stmt1.setString(2, usuarioId);
-                stmt1.executeUpdate();
-
-                PreparedStatement stmt2 = conn.prepareStatement(update);
-                stmt2.setString(1, livroId);
-                stmt2.executeUpdate();
-
-            } else {
-                throw new RuntimeException("Livro indisponível!");
-            }
+            stmt.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
-    public static void devolver(String livroId) {
+    public static void registrarDevolucao(int livroId) {
 
-        String updateLivro = "UPDATE livro SET disponivel = true WHERE id = ?";
-        String updateEmp = "UPDATE emprestimo SET data_devolucao = NOW() WHERE livro_id = ? AND data_devolucao IS NULL";
+        String sql = "UPDATE emprestimo SET data_devolucao = NOW() WHERE livro_id = ? AND data_devolucao IS NULL";
 
-        try (Connection conn = ConnectionFactory.getConnection()) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            PreparedStatement stmt1 = conn.prepareStatement(updateLivro);
-            stmt1.setString(1, livroId);
-            stmt1.executeUpdate();
-
-            PreparedStatement stmt2 = conn.prepareStatement(updateEmp);
-            stmt2.setString(1, livroId);
-            stmt2.executeUpdate();
+            stmt.setInt(1, livroId);
+            stmt.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

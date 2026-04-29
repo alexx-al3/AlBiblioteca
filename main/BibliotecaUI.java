@@ -60,12 +60,11 @@ public class BibliotecaUI extends JFrame {
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
-                int anoInt = Integer.parseInt(ano.getText());
 
                 LivroService.cadastrarLivro(
                         titulo.getText(),
                         autor.getText(),
-                        anoInt
+                        Integer.parseInt(ano.getText())
                 );
 
                 JOptionPane.showMessageDialog(null, "Livro cadastrado!");
@@ -81,14 +80,12 @@ public class BibliotecaUI extends JFrame {
     private void abrirCadastroUsuario() {
 
         JTextField nome = new JTextField();
-        JTextField id = new JTextField();
 
         String[] tipos = {"aluno", "professor"};
         JComboBox<String> tipo = new JComboBox<>(tipos);
 
         Object[] campos = {
                 "Nome:", nome,
-                "ID:", id,
                 "Tipo:", tipo
         };
 
@@ -103,7 +100,6 @@ public class BibliotecaUI extends JFrame {
             try {
 
                 UsuarioService.cadastrarUsuario(
-                        id.getText(),
                         nome.getText(),
                         tipo.getSelectedItem().toString()
                 );
@@ -139,11 +135,11 @@ public class BibliotecaUI extends JFrame {
             try {
 
                 EmprestimoService.emprestarLivro(
-                        livroId.getText(),
+                        Integer.parseInt(livroId.getText()),
                         usuarioId.getText()
                 );
 
-                JOptionPane.showMessageDialog(null, "Livro emprestado!");
+                JOptionPane.showMessageDialog(null, "Empréstimo realizado!");
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
@@ -158,7 +154,11 @@ public class BibliotecaUI extends JFrame {
         String livroId = JOptionPane.showInputDialog("ID do Livro:");
 
         try {
-            EmprestimoService.devolverLivro(livroId);
+
+            EmprestimoService.devolverLivro(
+                    Integer.parseInt(livroId)
+            );
+
             JOptionPane.showMessageDialog(null, "Livro devolvido!");
 
         } catch (Exception e) {
@@ -166,26 +166,27 @@ public class BibliotecaUI extends JFrame {
         }
     }
 
-    // ===== LISTAR LIVROS (CORRIGIDO DE VERDADE) =====
+    // ===== LISTAR LIVROS =====
 
     private void listarLivros() {
 
         try {
-            List<Livro> livros = LivroDAO.buscarTodos();
+
+            List<Livro> livros = LivroService.listarLivros();
 
             StringBuilder lista = new StringBuilder();
 
             for (Livro l : livros) {
                 lista.append(l.getId())
-                     .append(" | ")
-                     .append(l.getTitulo())
-                     .append(" | ")
-                     .append(l.getAutor())
-                     .append(" | ")
-                     .append(l.getAno())
-                     .append(" | ")
-                     .append(l.isDisponivel() ? "Disponível" : "Emprestado")
-                     .append("\n");
+                        .append(" | ")
+                        .append(l.getTitulo())
+                        .append(" | ")
+                        .append(l.getAutor())
+                        .append(" | ")
+                        .append(l.getAno())
+                        .append(" | ")
+                        .append(l.isDisponivel() ? "Disponível" : "Emprestado")
+                        .append("\n");
             }
 
             JTextArea area = new JTextArea(lista.toString());
@@ -201,5 +202,9 @@ public class BibliotecaUI extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        new BibliotecaUI();
     }
 }
