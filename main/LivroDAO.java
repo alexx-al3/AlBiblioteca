@@ -1,18 +1,14 @@
-
 import classe.Livro;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class LivroDAO {
 
     public static void inserir(Livro livro) {
 
-        String sql = "INSERT INTO livro VALUES (?, ?, ?, ?, true)";
+        String sql = "INSERT INTO livro (id, titulo, autor, ano, disponivel) VALUES (?, ?, ?, ?, true)";
 
         try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, livro.getId());
             stmt.setString(2, livro.getTitulo());
@@ -20,32 +16,22 @@ public class LivroDAO {
             stmt.setInt(4, livro.getAno());
 
             stmt.executeUpdate();
-            System.out.println("Livro salvo!");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public static void listar() {
-
+    public static ResultSet buscarTodos(Connection conn) throws Exception {
         String sql = "SELECT * FROM livro";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        return stmt.executeQuery();
+    }
 
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                System.out.println(
-                        rs.getString("id") + " | " +
-                                rs.getString("titulo") + " | " +
-                                rs.getString("autor") + " | " +
-                                rs.getInt("ano") + " | " +
-                                (rs.getBoolean("disponivel") ? "Disponível" : "Emprestado"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static ResultSet buscarPorTitulo(Connection conn, String titulo) throws Exception {
+        String sql = "SELECT * FROM livro WHERE LOWER(titulo) LIKE LOWER(?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, "%" + titulo + "%");
+        return stmt.executeQuery();
     }
 }

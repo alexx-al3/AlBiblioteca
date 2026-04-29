@@ -1,7 +1,4 @@
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class EmprestimoDAO {
 
@@ -28,14 +25,12 @@ public class EmprestimoDAO {
                 stmt2.setString(1, livroId);
                 stmt2.executeUpdate();
 
-                System.out.println("Livro emprestado!");
-
             } else {
-                System.out.println("Livro indisponível!");
+                throw new RuntimeException("Livro indisponível!");
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,10 +49,8 @@ public class EmprestimoDAO {
             stmt2.setString(1, livroId);
             stmt2.executeUpdate();
 
-            System.out.println("Livro devolvido!");
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

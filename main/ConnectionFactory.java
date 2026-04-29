@@ -1,19 +1,23 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
+import java.io.FileInputStream;
 
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:5432/postgres";
-
-    private static final String USER = "postgres.wozwfhzjaafudukrlkln";
-    private static final String PASSWORD = "bancodedadosalex";
-
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            Properties props = new Properties();
+            props.load(new FileInputStream("db.properties"));
+
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.user");
+            String password = props.getProperty("db.password");
+
+            return DriverManager.getConnection(url, user, password);
+
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Erro ao conectar com o banco!", e);
         }
     }
 }
