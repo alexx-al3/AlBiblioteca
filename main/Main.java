@@ -60,17 +60,18 @@ public class Main {
         UsuarioService.cadastrarUsuario(n, t);
     }
 
-    private static void emprestarLivro() {
+   private static void emprestarLivro() {
 
-        System.out.print("Livro ID: ");
-        int l = sc.nextInt();
-        sc.nextLine();
+    System.out.print("Livro ID: ");
+    int l = sc.nextInt();
+    sc.nextLine();
 
-        System.out.print("Usuário ID: ");
-        String u = sc.nextLine();
+    System.out.print("Usuário ID: ");
+    int u = sc.nextInt();  // era String u = sc.nextLine();
+    sc.nextLine();
 
-        EmprestimoService.emprestarLivro(l, u);
-    }
+    EmprestimoService.emprestarLivro(l, u);
+}
 
     private static void devolverLivro() {
 

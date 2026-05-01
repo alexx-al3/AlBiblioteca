@@ -31,4 +31,10 @@ public class Livro {
 
     public boolean isDisponivel() { return disponivel; }
     public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
+
+    @Override
+    public String toString() {
+        return id + " | " + titulo + " | " + autor + " | " + ano +
+               " | " + (disponivel ? "Disponível" : "Emprestado");
+    }
 }

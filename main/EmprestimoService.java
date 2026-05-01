@@ -1,46 +1,25 @@
 import classe.Usuario;
 import classe.Livro;
+
 public class EmprestimoService {
 
-    public static void emprestarLivro(int livroId, String usuarioId) {
-
+    public static void emprestarLivro(int livroId, int usuarioId) {
         Livro livro = LivroDAO.buscarPorId(livroId);
-
-        if (livro == null) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
-
-        if (!livro.isDisponivel()) {
-            System.out.println("Livro já está emprestado!");
-            return;
-        }
+        if (livro == null) throw new RuntimeException("Livro não encontrado!");
+        if (!livro.isDisponivel()) throw new RuntimeException("Livro já está emprestado!");
 
         Usuario usuario = UsuarioDAO.buscarPorId(usuarioId);
-
-        if (usuario == null) {
-            System.out.println("Usuário não encontrado!");
-            return;
-        }
+        if (usuario == null) throw new RuntimeException("Usuário não encontrado!");
 
         LivroDAO.atualizarDisponibilidade(livroId, false);
         EmprestimoDAO.registrarEmprestimo(livroId, usuarioId);
-
-        System.out.println("Empréstimo realizado com sucesso!");
     }
 
     public static void devolverLivro(int livroId) {
-
         Livro livro = LivroDAO.buscarPorId(livroId);
-
-        if (livro == null) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
+        if (livro == null) throw new RuntimeException("Livro não encontrado!");
 
         LivroDAO.atualizarDisponibilidade(livroId, true);
         EmprestimoDAO.registrarDevolucao(livroId);
-
-        System.out.println("Livro devolvido com sucesso!");
     }
 }

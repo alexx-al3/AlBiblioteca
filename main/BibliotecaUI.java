@@ -55,8 +55,7 @@ public class BibliotecaUI extends JFrame {
                 null,
                 campos,
                 "Cadastrar Livro",
-                JOptionPane.OK_CANCEL_OPTION
-        );
+                JOptionPane.OK_CANCEL_OPTION);
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
@@ -64,8 +63,7 @@ public class BibliotecaUI extends JFrame {
                 LivroService.cadastrarLivro(
                         titulo.getText(),
                         autor.getText(),
-                        Integer.parseInt(ano.getText())
-                );
+                        Integer.parseInt(ano.getText()));
 
                 JOptionPane.showMessageDialog(null, "Livro cadastrado!");
 
@@ -81,7 +79,7 @@ public class BibliotecaUI extends JFrame {
 
         JTextField nome = new JTextField();
 
-        String[] tipos = {"aluno", "professor"};
+        String[] tipos = { "aluno", "professor" };
         JComboBox<String> tipo = new JComboBox<>(tipos);
 
         Object[] campos = {
@@ -93,16 +91,14 @@ public class BibliotecaUI extends JFrame {
                 null,
                 campos,
                 "Cadastrar Usuário",
-                JOptionPane.OK_CANCEL_OPTION
-        );
+                JOptionPane.OK_CANCEL_OPTION);
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
 
                 UsuarioService.cadastrarUsuario(
                         nome.getText(),
-                        tipo.getSelectedItem().toString()
-                );
+                        tipo.getSelectedItem().toString());
 
                 JOptionPane.showMessageDialog(null, "Usuário cadastrado!");
 
@@ -128,15 +124,14 @@ public class BibliotecaUI extends JFrame {
                 null,
                 campos,
                 "Emprestar Livro",
-                JOptionPane.OK_CANCEL_OPTION
-        );
+                JOptionPane.OK_CANCEL_OPTION);
 
         if (opcao == JOptionPane.OK_OPTION) {
             try {
 
                 EmprestimoService.emprestarLivro(
                         Integer.parseInt(livroId.getText()),
-                        usuarioId.getText()
+                        Integer.parseInt(usuarioId.getText()) // era usuarioId.getText()
                 );
 
                 JOptionPane.showMessageDialog(null, "Empréstimo realizado!");
@@ -156,8 +151,7 @@ public class BibliotecaUI extends JFrame {
         try {
 
             EmprestimoService.devolverLivro(
-                    Integer.parseInt(livroId)
-            );
+                    Integer.parseInt(livroId));
 
             JOptionPane.showMessageDialog(null, "Livro devolvido!");
 
@@ -196,8 +190,7 @@ public class BibliotecaUI extends JFrame {
                     null,
                     new JScrollPane(area),
                     "Livros",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+                    JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
