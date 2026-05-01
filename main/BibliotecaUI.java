@@ -8,7 +8,7 @@ public class BibliotecaUI extends JFrame {
 
     public BibliotecaUI() {
 
-        setTitle("Sistema de Biblioteca");
+        setTitle("AlBiblioteca");
         setSize(400, 380);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -22,7 +22,7 @@ public class BibliotecaUI extends JFrame {
         cabecalho.add(titulo);
 
         JPanel painelBotoes = new JPanel(new GridLayout(6, 1, 10, 10));
-        painelBotoes.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        painelBotoes.setBorder(BorderFactory.createEmptyBorder(10, 10, 15, 20));
 
         JButton btnLivro = new JButton("Cadastrar Livro");
         JButton btnUsuario = new JButton("Cadastrar Usuário");
