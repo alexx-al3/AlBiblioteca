@@ -34,6 +34,7 @@ Arquitetura em camadas (DAO + Service + UI), simulando um sistema real de biblio
 ## 🗂️ Estrutura do projeto
 
 AlBiblioteca
+<<<<<<< HEAD
 Main
 ├── Main.java
 ├── BibliotecaUI.java
@@ -48,6 +49,22 @@ Main
 │   ├── Livro.java
 │   ├── Usuario.java
 │   ├── Emprestimo.java
+=======
+├──Main/
+│ ├── Main.java
+│ ├── BibliotecaUI.java
+│ ├── LivroDAO.java
+│ ├── UsuarioDAO.java
+│ ├── EmprestimoDAO.java
+│ ├── LivroService.java
+│ ├── UsuarioService.java
+│ ├── EmprestimoService.java
+│ ├── ConnectionFactory.java
+├── classe/
+│ ├── Livro.java
+│ ├── Usuario.java
+│ ├── Emprestimo.java
+>>>>>>> a134df1d42f4b99d76c77257d94011a598bdaca3
 
 ---
 
@@ -166,4 +183,8 @@ Projeto acadêmico com foco em:
 
 ## 👨‍💻 Autor
 
+<<<<<<< HEAD
 Desenvolvido por Alex Alves
+=======
+Desenvolvido por Alex Alves
+>>>>>>> a134df1d42f4b99d76c77257d94011a598bdaca3
