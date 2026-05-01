@@ -1,5 +1,7 @@
 import classe.Usuario;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
 
@@ -43,5 +45,26 @@ public class UsuarioDAO {
         }
 
         return null;
+    }
+
+    public static List<Usuario> buscarTodos() {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT * FROM usuario";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Usuario u = new Usuario(rs.getString("nome"), rs.getString("tipo"));
+                u.setId(rs.getInt("id"));
+                lista.add(u);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }
