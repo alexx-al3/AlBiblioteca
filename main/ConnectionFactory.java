@@ -10,14 +10,14 @@ public class ConnectionFactory {
             Properties props = new Properties();
             props.load(new FileInputStream("db.properties"));
 
-            String url = props.getProperty("db.url");
-            String user = props.getProperty("db.user");
+            String url      = props.getProperty("db.url");
+            String user     = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
             return DriverManager.getConnection(url, user, password);
 
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao conectar com o banco!", e);
+            throw new RuntimeException("Erro ao conectar com o banco de dados. Verifique o db.properties.", e);
         }
     }
 }

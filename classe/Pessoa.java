@@ -10,16 +10,9 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
-    // Encapsulamento (getters e setters)
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
 }
