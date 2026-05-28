@@ -1,0 +1,8 @@
+{
+  "name": "acrc-chaves",
+  "version": "5.0.0",
+  "description": "ACRC Imóveis — Controle de Chaves",
+  "dependencies": {
+    "nodemailer": "^6.9.9"
+  }
+}
