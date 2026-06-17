@@ -2205,7 +2205,10 @@ function renderProtoKeys(){
   el.innerHTML=pKeys.map((ki,i)=>{
     const k=keys[ki];
     return`<div class="proto-key-item">
-      <div><span class="proto-key-loc">${k.loc}</span>${k.codigo?`<span style="font-size:11px;color:var(--tx3);margin-left:6px">${k.codigo}</span>`:""}</div>
+      <div style="flex:1;min-width:0">
+        <div><span class="proto-key-loc">${k.loc}</span>${k.codigo?`<span style="font-size:11px;color:var(--tx3);margin-left:6px">${k.codigo}</span>`:""}</div>
+        ${k.endereco?`<div style="font-size:11px;color:var(--tx2);margin-top:2px">📍 ${k.endereco}</div>`:""}
+      </div>
       ${pKeys.length>1?`<button class="proto-key-remove" onclick="protoRemoveKey(${i})">×</button>`:""}
     </div>`;
   }).join("");
@@ -2374,7 +2377,7 @@ async function gerarPDF(){
     field("Nome / Relação", nome+(cpf?` — CPF/RG: ${cpf}`:"")); 
     if(tel) field("Telefone", tel);
     field("Tipo de destinatário", pTipo);
-    const endImovel = processedKeys.map(pk=>pk.k.endereco).filter(Boolean).join(" / ");
+    const endImovel = processedKeys.map(pk=>(pk.k.endereco||"").trim()).filter(Boolean).join(" / ");
     if(endImovel) field("Endereço do Imóvel", endImovel);
     field("Data de saída", fd(k.dataRet)||"—");
     field("Devolução prevista", pSaida==="TEMPORÁRIA"?fd(k.dataDev):"Não se aplica");
